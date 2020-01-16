@@ -1,0 +1,36 @@
+These two programs simply translate between a minimal waveform and
+a uniform-timestep waveform.  Compilation is trivial -- 'make'
+should work.
+
+Then, given a single waveform data file (one L,M mode), you can
+compress the file with something like
+
+  MinimizeGrid FileName.dat
+
+This will output FileName.dat.minimal, which can then be
+reconstituted with something like
+
+  ReconstituteGrid FileName.dat.minimal
+
+For multiple L,M modes, just use xargs.  Maybe
+
+  ls *dat | xargs -t -n 1 MinimizeGrid
+  ls *minimal | xargs -t -n 1 ReconstituteGrid
+
+More details and further options are given by
+
+  MinimizeGrid --help
+  ReconstituteGrid --help
+
+In particular, note that the tolerances can be set on MinimizeGrid.
+For example, if you want the reconstituted grid to be within 1e-5
+of the original, you can enter
+
+  MinimizeGrid FileName.dat 1e-5
+
+You can also enter separate tolerances for the amplitude and phase:
+
+  MinimizeGrid FileName.dat 1e-6 1e-7
+
+Here, 1e-6 is the tolerance on the amplitude and 1e-7 is the
+tolerance on the phase.
